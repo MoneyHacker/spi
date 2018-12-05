@@ -21,10 +21,10 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Pattern;
 
 /**
- * Created by lvxiang@ganji.com 2018/8/15  10:08
+ * Created by 278076999@qq.com 2018/8/15  10:08
  * 扩展点加载器
  *
- * @author <a href="mailto:lvxiang@ganji.com">simple</a>
+ * @author <a href="mailto:278076999@qq.com.com">simple</a>
  */
 @Slf4j
 public class SPILoader<T> {
