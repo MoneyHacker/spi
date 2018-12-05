@@ -1,0 +1,3 @@
+#一个接口有多个扩展实现,可通过注解加载不同的扩展实现
+taskOne=com.simple.frame.spi.impl.TaskImplOne
+taskTwo=com.simple.frame.spi.impl.TaskImplTwo
