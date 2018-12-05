@@ -4,9 +4,9 @@ import com.simple.frame.spi.Protocol;
 import com.simple.frame.spi.Task;
 
 /**
- * Created by lvxiang@ganji.com 2018/8/15 14:36
+ * Created by 278076999@qq.com 2018/8/15 14:36
  *
- * @author <a href="mailto:lvxiang@ganji.com">simple</a>
+ * @author <a href="mailto:278076999@qq.com">simple</a>
  */
 public class TaskImplOne implements Task {
     @Override
