@@ -19,6 +19,5 @@ public class SPILoaderTest {
         System.out.println(task.getExtension("taskTwo").getName());
         System.out.println(task.getSupportedExtensions());
         System.out.println(task.getDefaultExtensionName());
-        //System.out.println(task.getAdaptiveExtension().getName(new URL(new HashMap<>())));
     }
 }
