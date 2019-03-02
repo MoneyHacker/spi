@@ -1,6 +1,4 @@
 package com.simple.frame.spi;
-
-import com.simple.frame.spi.Protocol;
 import com.simple.frame.spi.annotation.Adaptive;
 import com.simple.frame.spi.annotation.SPI;
 

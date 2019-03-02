@@ -19,6 +19,7 @@ package com.simple.frame.spi.compiler;
 import com.simple.frame.spi.utils.ClassHelper;
 import com.simple.frame.spi.utils.ClassUtils;
 import javassist.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.HashMap;
