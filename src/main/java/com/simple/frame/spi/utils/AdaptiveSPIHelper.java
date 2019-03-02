@@ -12,37 +12,39 @@ import java.util.Arrays;
 
 /**
  * Created by lvxiang@ganji.com 2018/8/15 16:56
- *
  * @author <a href="mailto:278076999@qq.com.com">simple</a>
  */
 @Slf4j
-public class AdaptiveSPIHelper {
-    private AdaptiveSPIHelper(){}
-
-    /**
-     * 动态生成扩展点了代码
-     * @param cachedDefaultName 默认扩展点的名称
-     * @param spiType           扩展点类型
-     * @return                  动态生成的扩展点代码字符串
-     */
-    public static  String createAdaptiveExtensionClassCode(String cachedDefaultName,Class<?> spiType) {
-        StringBuilder codeBuilder = new StringBuilder();
+public abstract  class AdaptiveSPIHelper {
+    private static boolean hasAdaptiveMethod( Class<?> spiType) {
         Method[] methods = spiType.getMethods();
-        boolean hasAdaptiveAnnotation = false;
         for (Method m : methods) {
             if (m.isAnnotationPresent(Adaptive.class)) {
-                hasAdaptiveAnnotation = true;
-                break;
+                return true;
             }
         }
+        return false;
+    }
+    /**
+     * 动态生成扩展点了代码
+     *
+     * @param cachedDefaultName 默认扩展点的名称
+     * @param spiType           扩展点类型
+     * @return 动态生成的扩展点代码字符串
+     */
+
+    public static String createAdaptiveExtensionClassCode(String cachedDefaultName, Class<?> spiType) {
+        boolean hasAdaptiveAnnotation = hasAdaptiveMethod(spiType);
         // no need to generate adaptive class since there's no adaptive method found.
         if (!hasAdaptiveAnnotation) {
             throw new IllegalStateException("No adaptive method on extension " + spiType.getName() + ", refuse to create the adaptive class!");
         }
+        StringBuilder codeBuilder = new StringBuilder();
         codeBuilder.append("package ").append(spiType.getPackage().getName()).append(";");
         codeBuilder.append("\nimport ").append(SPILoader.class.getName()).append(";");
-        codeBuilder.append("\npublic class ").append(spiType.getSimpleName()).append("$Adaptive").append(" implements ").append(spiType.getCanonicalName()).append(" {");
-
+        codeBuilder.append("\npublic class ").append(spiType.getSimpleName()).append("$Adaptive")
+                   .append(" implements ").append(spiType.getCanonicalName()).append(" {");
+        Method[] methods = spiType.getMethods();
         for (Method method : methods) {
             Class<?> rt = method.getReturnType();
             Class<?>[] pts = method.getParameterTypes();
@@ -51,8 +53,8 @@ public class AdaptiveSPIHelper {
             StringBuilder code = new StringBuilder(512);
             if (adaptiveAnnotation == null) {
                 code.append("throw new UnsupportedOperationException(\"method ")
-                        .append(method.toString()).append(" of interface ")
-                        .append(spiType.getName()).append(" is not adaptive method!\");");
+                    .append(method.toString()).append(" of interface ")
+                    .append(spiType.getName()).append(" is not adaptive method!\");");
             } else {
                 int urlTypeIndex = -1;
                 for (int i = 0; i < pts.length; ++i) {
@@ -67,12 +69,10 @@ public class AdaptiveSPIHelper {
                     String s = String.format("\nif (arg%d == null) throw new IllegalArgumentException(\"url == null\");",
                             urlTypeIndex);
                     code.append(s);
-
                     s = String.format("\n%s url = arg%d;", Protocol.class.getName(), urlTypeIndex);
                     code.append(s);
-                }
-                // did not find parameter in URL type
-                else {
+                } else {
+                    // did not find parameter in URL type
                     String attribMethod = null;
                     // find URL getter method
                     LBL_PTS:
@@ -99,12 +99,11 @@ public class AdaptiveSPIHelper {
 
                     // Null point check
                     String s = String.format("\nif (arg%d == null) throw new IllegalArgumentException(\"%s argument == null\");",
-                            urlTypeIndex, pts[urlTypeIndex].getName());
+                                      urlTypeIndex, pts[urlTypeIndex].getName());
                     code.append(s);
                     s = String.format("\nif (arg%d.%s() == null) throw new IllegalArgumentException(\"%s argument %s() == null\");",
-                            urlTypeIndex, attribMethod, pts[urlTypeIndex].getName(), attribMethod);
+                              urlTypeIndex, attribMethod, pts[urlTypeIndex].getName(), attribMethod);
                     code.append(s);
-
                     s = String.format("%s url = arg%d.%s();", Protocol.class.getName(), urlTypeIndex, attribMethod);
                     code.append(s);
                 }
