@@ -5,7 +5,12 @@ package com.simple.frame.spi.support;
 import com.simple.frame.spi.annotation.Activate;
 
 import java.util.Comparator;
-
+/**
+ * 
+ *Created by lvxiang 2019/3/2  17:47
+ *
+ *@author <a href="mailto:278076999@qq.com">simple</a>
+ */
 public class ActivateComparator implements Comparator<Object> {
     public static final Comparator<Object> COMPARATOR = new ActivateComparator();
 
@@ -30,7 +35,8 @@ public class ActivateComparator implements Comparator<Object> {
         Activate that = o1.getClass().getAnnotation(Activate.class);
         Activate anthor = o2.getClass().getAnnotation(Activate.class);
         /**
-         * never return 0 even if n1 equals n2, otherwise, o1 and o2 will override each other in collection like HashSet
+         * never return 0 even if n1 equals n2,
+         * otherwise, o1 and o2 will override each other in collection like HashSet
          */
         return that.order() > anthor.order() ? -1 : 1;
     }
