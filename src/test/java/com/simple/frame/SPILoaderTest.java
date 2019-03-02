@@ -6,6 +6,7 @@ import com.simple.frame.spi.SPILoader;
 import com.simple.frame.spi.Task;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,8 +45,10 @@ public class SPILoaderTest {
         SPILoader<Task> task = SPILoader.getExtensionLoader(Task.class);
         System.out.println(task.getExtension("taskOne").getName());
         System.out.println(task.getExtension("taskTwo").getName());
-        Task  taskThree = task.getActivateExtension(protocol,"taskThree").get(0);
+        List<Task> taskThreeList = task.getActivateExtension(protocol,"taskThree");
+        Task  taskThree = taskThreeList.get(0);
         System.out.println(taskThree.getName());
+        System.out.println("taskTwo= " + (task.getActivateExtension(protocol,"taskTwo").get(0)).getName());
         System.out.println(task.getSupportedExtensions());
         System.out.println(task.getDefaultExtensionName());
     }
