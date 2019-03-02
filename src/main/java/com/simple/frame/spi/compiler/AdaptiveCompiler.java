@@ -16,7 +16,6 @@
  */
 package com.simple.frame.spi.compiler;
 
-
 import com.simple.frame.spi.SPILoader;
 import com.simple.frame.spi.annotation.Adaptive;
 import com.simple.frame.spi.Compiler;

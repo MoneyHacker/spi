@@ -22,6 +22,8 @@ import com.simple.frame.spi.utils.ClassHelper;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.simple.frame.spi.Compiler;
+import com.simple.frame.spi.utils.ClassUtils;
+
 /**
  * Abstract compiler. (SPI, Prototype, ThreadSafe)
  */

@@ -17,6 +17,7 @@
 package com.simple.frame.spi.compiler;
 
 import com.simple.frame.spi.utils.ClassHelper;
+import com.simple.frame.spi.utils.ClassUtils;
 import javassist.*;
 
 import java.util.ArrayList;
