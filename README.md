@@ -1,6 +1,6 @@
 # 一 通用SPI ,Java SPI, Dubbo SPI
 从dubbo中抽取的spi 详情看示例 SPILoaderTest.java
-# 二 使用,具体可参见测试类
+# 二 使用,具体可参见测试类(SPILoaderTest)
  @Test
  public void shouldAnswerWithTrue() {
      SPILoader<Task> task = SPILoader.getExtensionLoader(Task.class);
